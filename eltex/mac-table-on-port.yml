@@ -1,0 +1,33 @@
+- name: Show PORT status
+  hosts: eltexs
+  gather_facts: False
+  vars:
+    specifiedPort: gi1/0/1
+    userName: "admin"
+    userPass: "admin"
+  connection: local
+  tasks:
+    - name: Get port information
+      telnet:
+        user: admin
+        password: admin
+        login_prompt: "User Name:"
+        password_prompt: "Password:"
+        pause: 2
+        timeout: 20
+        prompts:
+          - '[>|#]'
+        command:
+          show mac address-table 
+      register: outputData
+      ignore_errors: True
+    - set_fact:
+        tmp_var: "{{  outputData['output'][0] | regex_replace('\\r\\n', '|')}}"
+    - set_fact:
+        tmp_var: "{{ tmp_var.split('|') }}"
+    - set_fact:
+        new_list: "{{ new_list | default([]) + [item] }}"
+      with_items: "{{ tmp_var }}"
+      when: '"{{ specifiedPort }} "in item'
+    - debug: var=new_list
+      ignore_errors: True

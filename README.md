@@ -3,4 +3,4 @@
 
 Curently contains:
    - ELTEX ME2342B Switch
-   	1) (port_status.yml) - Port status information (Speed, Up or down, port uplink time)
+   	1. (port_status.yml) - Port status information (Speed, Up or down, port uplink time)

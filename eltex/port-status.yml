@@ -9,8 +9,8 @@
   tasks:
     - name: Get port information
       telnet:
-        user: admin
-        password: admin
+        user: "{{ userName }}"
+        password: "{{ userPass }}"
         login_prompt: "User Name:"
         password_prompt: "Password:"
         pause: 2
